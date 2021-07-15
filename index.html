@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="modal__wrapper" id="modal_wrpr">
+        <div class="modal__window">
+            <div class="modal__content">
+                <div class="close">
+                    <span id="close_modal">&times;</span>
+                </div>
+                <div class="modal__items">
+                    <span>Title</span>
+                    <input type="text" id="title" value="">
+                    <button id="add_title">Save</button>
+                    <hr>
+                    <input type="text" id="inp" value="">
+                    <button id="add_list">Save</button>
+                    <button id="clear">Delete List</button>
+                    <hr>
+                    <div id="out"></div>
+                    <div id="date"></div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div class="search">
+        <div class="search__item">
+            <input type="text" class="input" >
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="todo__list">
+            <div class="todo__content">
+                <div class="item">
+                    <div class="edit_a">
+                        <span class="title__text" id="title__text">Список дел</span>
+                        <a class="edit" href="#" id="modal">Edit</a>
+                    </div>
+                    <div class="item__content"  id="item"></div>
+                </div>
+                
+                <div class="item__add">
+                    <a class="add" href="#" id="new_item">Add</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>

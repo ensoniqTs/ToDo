@@ -1,0 +1,121 @@
+.search{
+    width: 1200px;
+    height: 100px;
+}
+.input{
+    width: 900px;
+    height: 50px;
+    font-size: 20px;
+    border: solid 1px;
+
+}
+
+
+.wrapper{
+    width: 1200px;
+    height: 800px;
+    
+    display: flex;
+    align-items: center;
+}
+.item{
+   
+    border: solid 2px;
+    border-radius: 5%;
+    background-color: rgba(160, 103, 214, 0.719);
+    margin: 2px;
+}
+
+.add{
+    width: 195px;
+    height: 195px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px;
+    border-radius: 5%;
+    background-color: rgba(34, 150, 228, 0.842);
+    
+}
+.edit_a{
+    display: flex;
+    justify-content: right;
+}
+.edit{
+    margin-left: auto;
+    opacity: 0;
+    width: 50px;
+    height: 50px;
+    
+
+    
+}
+.edit:hover{
+    opacity: 1;
+    
+}
+.todo__content{
+    
+    display: grid;
+    grid-template-columns: 250px 200px 250px;
+    grid-template-rows: 250px 200px 200px; 
+}
+
+/*Модальное окно*/
+
+.modal__wrapper{
+    display: none;
+    position: absolute;
+    
+
+}
+.modal__window{
+    width: 1200px;
+    height: 900px;
+    background-color: rgba(0, 0, 0, 0.685);
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    
+    
+}
+.modal__content{
+    width: 900px;
+    height: 800px;
+    background-color: #fff;
+    transform: rotateX(0deg);
+    animation-name: modal;
+    animation-duration: 1s;
+}
+#date{
+    margin-top: auto;
+    font-size: 10px;
+}
+.close{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 8px;
+    
+}
+#close_modal{
+    cursor: pointer;
+    font-size: 30px;
+}
+
+@keyframes modal{
+    from {
+        opacity: 0;
+        top: 5%;
+        transform: rotateX(25deg);
+    }
+
+    to {
+        opacity: 1;
+        top: 15%;
+        transform: rotateX(0deg);
+    }
+}
+.underlined {
+	text-decoration: line-through;
+}

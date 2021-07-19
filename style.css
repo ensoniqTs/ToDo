@@ -1,109 +1,79 @@
-.search{
-    width: 1200px;
-    height: 100px;
-}
-.input{
-    width: 900px;
-    height: 50px;
-    font-size: 20px;
-    border: solid 1px;
-
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, serif;
 }
 
-
-.wrapper{
-    width: 1200px;
-    height: 800px;
-    
-    display: flex;
-    align-items: center;
-}
-.item{
-   
-    border: solid 2px;
-    border-radius: 5%;
-    background-color: rgba(160, 103, 214, 0.719);
-    margin: 2px;
-}
-
-.add{
-    width: 195px;
-    height: 195px;
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: solid 2px;
-    border-radius: 5%;
-    background-color: rgba(34, 150, 228, 0.842);
-    
-}
-.edit_a{
-    display: flex;
-    justify-content: right;
-}
-.edit{
-    margin-left: auto;
-    opacity: 0;
-    width: 50px;
-    height: 50px;
-    
-
-    
-}
-.edit:hover{
-    opacity: 1;
-    
-}
-.todo__content{
-    
-    display: grid;
-    grid-template-columns: 250px 200px 250px;
-    grid-template-rows: 250px 200px 200px; 
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 6px 10px 6px 0;
 }
 
 /*Модальное окно*/
-
-.modal__wrapper{
+.modal {
     display: none;
     position: absolute;
-    
-
-}
-.modal__window{
-    width: 1200px;
-    height: 900px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.685);
-    display: flex;
-    justify-content:space-around;
+    justify-content: space-around;
     align-items: center;
-    
-    
 }
-.modal__content{
-    width: 900px;
-    height: 800px;
+
+.modal .window {
+    margin: 0 auto;
+    min-width: 300px;
+    min-height: 100px;
+    box-sizing: border-box;
     background-color: #fff;
-    transform: rotateX(0deg);
-    animation-name: modal;
-    animation-duration: 1s;
+    transition: 1s;
+    position: relative;
 }
-#date{
+
+.modal .window .header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    border-bottom: solid 1px #ccc;
+    background-color: #eee;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+.modal .window .content {
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.modal .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#date {
     margin-top: auto;
     font-size: 10px;
 }
-.close{
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 8px;
-    
-}
-#close_modal{
+
+#close_modal {
     cursor: pointer;
     font-size: 30px;
 }
 
-@keyframes modal{
+@keyframes modal {
     from {
         opacity: 0;
         top: 5%;
@@ -116,6 +86,96 @@
         transform: rotateX(0deg);
     }
 }
+
 .underlined {
-	text-decoration: line-through;
+    text-decoration: line-through;
+}
+
+.root {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.search {
+    height: 100px;
+}
+
+.input {
+    height: 50px;
+    font-size: 16px;
+    border: solid 1px;
+}
+
+.root > .content {
+    display: flex;
+    align-items: center;
+}
+
+.root > .content .list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, auto));
+    grid-template-rows: repeat(auto-fill, minmax(200px, auto));
+    grid-gap: 1em;
+}
+
+.root > .content .list .item {
+    box-sizing: border-box;
+    box-shadow: 0 0 4px #000;
+    border-radius: 5px;
+    background-color: rgba(160, 103, 214, 0.719);
+}
+
+.root > .content .list .add {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    box-shadow: 0 0 4px #000;
+    border-radius: 5px;
+    background-color: rgba(34, 150, 228, 0.842);
+}
+
+.root > .content .list .item {
+    padding: 8px 16px;
+}
+
+.root > .content .list .item .header {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    height: 30px;
+}
+
+.root > .content .list .item .header .title {
+    font-weight: bold;
+}
+
+.root > .content .list .item > * {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.root > .content .list .item > * button {
+    margin-left: auto;
+    opacity: 0;
+}
+
+.root > .content .list .item > *:hover button {
+    opacity: 1;
+}
+
+.root > .content .list .item .edit {
+    cursor: pointer;
+    margin-left: auto;
+    opacity: 0;
+}
+
+.root > .content .list .item:hover .edit {
+    opacity: 1;
 }

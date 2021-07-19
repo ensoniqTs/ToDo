@@ -1,103 +1,173 @@
+"use strict";
 
+const $contentList = document.querySelector('.root > .content > .list');
+const $modal = document.getElementById('modal');
+const $closeMod = document.getElementById('close_modal');
 
-let modBtn = document.getElementById('modal');
-let mod = document.getElementById('modal_wrpr');
-let closeMod= document.getElementById('close_modal');
-
-modBtn.onclick = function (){
-    mod.style.display = "block";
+function openModal() {
+    $modal.style.display = "flex";
+    $modal.querySelector('input[name="title"]').value = note?.title;
 }
 
-closeMod.onclick = function (){
-    mod.style.display = "none";
+function closeModal() {
+    $modal.style.display = "none";
 }
 
+$closeMod.addEventListener('click', e => {
+    e.preventDefault();
 
-let todoList = [];
-let tiTle; 
+    closeModal();
+}, false);
 
-document.getElementById('add_title').onclick = () => {
-	tiTle = document.getElementById('title').value;
+let note = [];
+
+function getNote(defaultState = {}) {
+    try {
+        const data = localStorage.getItem('note');
+
+        if (!data) {
+            note = defaultState;
+        } else {
+            note = JSON.parse(data);
+        }
+    } catch (e) {
+        note = defaultState;
+        console.log(e);
+    }
 }
 
+getNote(// test data
+    {
+        title: 'Test',
+        todos: [{
+            text: 'Home task...',
+            check: false
+        }],
+        date: new Date()
+    }
+);
+renderNote();
 
-
-document.getElementById('inp').onkeyup = function inpt(){
+document.getElementById('inp').onkeyup = function inpt() {
     let b = document.getElementById('inp').value;
     localStorage.setItem('input', b);
 }
 document.getElementById('inp').value = localStorage.getItem('input');
 
-if (localStorage.getItem('todo')) {
-	todoList = JSON.parse(localStorage.getItem('todo'));
-	out();
+document.getElementById('form-update').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const inputs = [...e.currentTarget.getElementsByTagName('input')];
+    const values = [...inputs].reduce((acc, { value, name }) => {
+        acc[name] = value;
+
+        return acc;
+    }, {});
+
+    if (!values.title || !values.text) {
+        return;
+    }
+
+    Object.assign(note, {
+        title: values.title,
+        date: new Date()
+    })
+
+    note?.todos.push({
+        text: values.text,
+        check: false,
+    });
+
+    saveNote();
+
+    inputs.forEach((input) => input.value = '');
+    closeModal();
+}, false);
+
+function saveNote() {
+    if (saveNote.timeoutId) {
+        clearTimeout(saveNote.timeoutId);
+    }
+
+    saveNote.timeoutId = setTimeout(() => {
+        localStorage.setItem('note', JSON.stringify(note));
+        renderNote();
+    }, 50);
 }
 
-document.getElementById('add_list').onclick = function (){
-	let temp = {};
-	let item = document.getElementById('inp').value;
-	temp.todo = item;
-	temp.check = false;
-	temp.title = tiTle;
-	todoList.push(temp);
-	out();
-	localStorage.setItem('todo', JSON.stringify(todoList));
-    document.getElementById('inp').value = '';
-    localStorage.removeItem('input');
-    let sDate = new Date();
-    localStorage.setItem('date', JSON.stringify(sDate));
-	
+function renderNote() {
+    if (renderNote.timeoutId) {
+        clearTimeout(renderNote.timeoutId);
+    }
+
+    renderNote.timeoutId = setTimeout(() => {
+        const nodes = [];
+
+        note?.todos.forEach((item, id) => {
+            const box = document.createElement('label');
+
+            const input = document.createElement('input');
+            input.setAttribute('type', 'checkbox');
+
+            const span = document.createElement('span');
+            span.innerText = item.text;
+
+            if (item.check) {
+                span.classList.add('underlined');
+                input.checked = true;
+            }
+
+            box.append(input);
+            box.append(span);
+
+            input.addEventListener('change', (e) => {
+                e.preventDefault();
+
+                item.check = !item.check;
+                saveNote();
+            }, false);
+
+            const button = document.createElement('button');
+            button.setAttribute('type', 'button');
+            button.addEventListener('click', () => {
+                note?.todos.splice(id, 1);
+                saveNote();
+            }, false);
+            button.innerText = 'delete';
+
+            box.append(button);
+            nodes.push(box);
+        });
+
+        const item = document.createElement('div');
+
+        item.classList.add('item');
+
+        const header = document.createElement('div');
+        header.classList.add('header');
+        header.innerHTML = `<span class="title">${note?.title}</span>`;
+
+        const edit = document.createElement('button');
+        edit.setAttribute('type', 'button');
+        edit.classList.add('edit');
+        edit.innerText = 'Edit';
+
+        edit.addEventListener('click', e => {
+            e.preventDefault();
+
+            openModal();
+        }, false);
+
+        header.append(edit);
+        item.append(header);
+        item.append(...nodes);
+
+        $contentList.querySelectorAll('.item').forEach((item) => item.remove());
+        $contentList.insertBefore(item, $contentList.querySelector('.add'));
+    }, 0);
 }
 
-document.getElementById('out').onchange = function (event){
-	currentKey = event.target.parentNode.childNodes[1].data.slice(1);
-	for (i = 0; i<todoList.length; i++) {
-		if (todoList[i].todo == currentKey) {
-			todoList[i].check = !todoList[i].check;
-			out();
-			localStorage.setItem('todo', JSON.stringify(todoList));
-			break;
-		}
-	}
-}
-
-function out() {
-	let out = '';
-	for (let i=0; i<todoList.length; i++) {
-		if (todoList[i].check) {
-			out += '<span class="underlined"><input type="checkbox" checked> ' + todoList[i].todo + '<button onclick="delList()">Удалить</button>' + '</span><br>';
-		}
-
-		else {
-			out+='<span><input type="checkbox"> '+ todoList[i].todo + '</span><br>';
-		}
-		if (todoList[i].check === true) {
-			document.getElementById('inp').value = todoList[i].todo;
-		}
-
-		
-		
-	}
-	let daTe = JSON.parse(localStorage.getItem('date'))
-	document.getElementById('out').innerHTML = out;
-    document.getElementById('item').innerHTML = out + daTe;
-    document.getElementById('date').innerHTML = daTe;
-	
-}
-document.getElementById('clear').onclick = function(){
+document.getElementById('clear').onclick = function () {
     localStorage.clear();
-	window.location.reload();   
+    window.location.reload();
 }
-
-
-function delList(){
-	for (let i=0; i<todoList.length; i++) {
-		if (todoList[i].check === true){
-			 todoList.splice(i, 1);
-			 localStorage.setItem('todo', JSON.stringify(todoList));
-			 out();
-		}
-	}	
-}
-
-

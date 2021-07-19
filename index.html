@@ -8,50 +8,49 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="modal__wrapper" id="modal_wrpr">
-        <div class="modal__window">
-            <div class="modal__content">
-                <div class="close">
-                    <span id="close_modal">&times;</span>
-                </div>
-                <div class="modal__items">
-                    <span>Title</span>
-                    <input type="text" id="title" value="">
-                    <button id="add_title">Save</button>
-                    <hr>
-                    <input type="text" id="inp" value="">
-                    <button id="add_list">Save</button>
-                    <button id="clear">Delete List</button>
-                    <hr>
-                    <div id="out"></div>
-                    <div id="date"></div>
-                </div>
-            </div> 
-        </div>
-    </div>
-    <div class="search">
-        <div class="search__item">
-            <input type="text" class="input" >
-        </div>
-    </div>
-    <div class="wrapper">
-        <div class="todo__list">
-            <div class="todo__content">
-                <div class="item">
-                    <div class="edit_a">
-                        <span class="title__text" id="title__text">Список дел</span>
-                        <a class="edit" href="#" id="modal">Edit</a>
+    <div class="root">
+        <div class="modal" id="modal">
+            <div class="window">
+                <div class="header">
+                    <h3>Update note</h3>
+                    <div class="close">
+                        <span id="close_modal">&times;</span>
                     </div>
-                    <div class="item__content"  id="item"></div>
                 </div>
-                
-                <div class="item__add">
-                    <a class="add" href="#" id="new_item">Add</a>
+                <div class="content">
+                    <form id="form-update">
+                        <span>Title</span>
+
+                        <input type="text" name="title" id="title" value="">
+
+                        <hr>
+
+                        <input type="text" name="text" id="inp" value="">
+                        <button id="clear">Delete List</button>
+
+                        <hr>
+
+                        <div id="out"></div>
+                        <div id="date"></div>
+
+                        <button type="submit" id="add_list">Save</button>
+                    </form>
                 </div>
             </div>
         </div>
+        <div class="search">
+            <div class="search__item">
+                <input type="text" class="input" >
+            </div>
+        </div>
+        <div class="content">
+            <div class="list">
+                <button class="add">
+                    Add
+                </button>
+            </div>
+        </div>
     </div>
-    
 
     <script src="script.js"></script>
 </body>
